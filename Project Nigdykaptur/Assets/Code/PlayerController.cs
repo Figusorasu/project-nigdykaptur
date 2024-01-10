@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.AI;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
 	#region Variables & Components
+		[Header("Movement")]
+			public float lookRotationSpeed = 8f;	
 
-		public float lookRotationSpeed = 8f;	
+			[SerializeField] private LayerMask whatCanBeClickedOn;
+			[SerializeField] private NavMeshAgent _playerAgent;
+			[SerializeField] private ParticleSystem clickEffect;
 
-		[SerializeField] private LayerMask whatCanBeClickedOn;
-		[SerializeField] private NavMeshAgent _playerAgent;
-		[SerializeField] private ParticleSystem clickEffect;
-
-		private PlayerInput _playerInput;
+			private PlayerInput _playerInput;
 
 	#endregion
 
@@ -67,6 +69,8 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	#endregion
+
+
 
 
 
