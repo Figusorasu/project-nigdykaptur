@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.3
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 5
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.1
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 371229003}
   - component: {fileID: 371229007}
   - component: {fileID: 371229008}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1806,13 +1806,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f14308c910d1e4fac9fb9c26ff5a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTextureDefault: {fileID: 2800000, guid: 4f7cba9850b9a6e46983375c7594e68d,
+  cursorTextureDefault: {fileID: 2800000, guid: 5d71c4261a7bc6b40af2545afd82fcbe,
     type: 3}
-  cursorTextureInteract: {fileID: 2800000, guid: dd07fb834d17ba246afa0dc1870bf45c,
+  cursorTextureInteract: {fileID: 2800000, guid: e4763b1ad2e1207478b48ed695025674,
     type: 3}
-  cursorTextureCanWalkOn: {fileID: 2800000, guid: fdb395d119b0d3248a1bac5f30a2e69a,
+  cursorTextureCanWalkOn: {fileID: 2800000, guid: 5d71c4261a7bc6b40af2545afd82fcbe,
     type: 3}
-  cursorTextureCantWalkOn: {fileID: 2800000, guid: 43e1aae82333e7847a933815274d873e,
+  cursorTextureCantWalkOn: {fileID: 2800000, guid: 64450e997945c3648bae2f109601f308,
     type: 3}
   clickPosition: {x: 0, y: 0}
 --- !u!4 &1274756741
@@ -1856,7 +1856,7 @@ GameObject:
   - component: {fileID: 1340848735}
   - component: {fileID: 1340848739}
   - component: {fileID: 1340848740}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2628,7 +2628,7 @@ GameObject:
   - component: {fileID: 2067364264}
   - component: {fileID: 2067364268}
   - component: {fileID: 2067364269}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2749,6 +2749,49 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 223387954, guid: e4829131dccf4944db32770e89a5a559, type: 3}
+      propertyPath: m_Effectors.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223387954, guid: e4829131dccf4944db32770e89a5a559, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Visible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 223387954, guid: e4829131dccf4944db32770e89a5a559, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Transform
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 223387954, guid: e4829131dccf4944db32770e89a5a559, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.size
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 223387954, guid: e4829131dccf4944db32770e89a5a559, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.shape
+      value: 
+      objectReference: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+    - target: {fileID: 223387954, guid: e4829131dccf4944db32770e89a5a559, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.color.a
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 223387954, guid: e4829131dccf4944db32770e89a5a559, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2234518383469819400, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.02035
+      objectReference: {fileID: 0}
+    - target: {fileID: 2234518383469819400, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00139
+      objectReference: {fileID: 0}
+    - target: {fileID: 2234518383469819400, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00922
+      objectReference: {fileID: 0}
     - target: {fileID: 2910193025700620918, guid: e4829131dccf4944db32770e89a5a559,
         type: 3}
       propertyPath: m_RootOrder
@@ -2762,7 +2805,7 @@ PrefabInstance:
     - target: {fileID: 2910193025700620918, guid: e4829131dccf4944db32770e89a5a559,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.33
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2910193025700620918, guid: e4829131dccf4944db32770e89a5a559,
         type: 3}
@@ -2808,6 +2851,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7833747927790335902, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00065
+      objectReference: {fileID: 0}
+    - target: {fileID: 7833747927790335902, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.02482
+      objectReference: {fileID: 0}
+    - target: {fileID: 7833747927790335902, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874891719168581003, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00051
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874891719168581003, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.02483
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874891719168581003, guid: e4829131dccf4944db32770e89a5a559,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4829131dccf4944db32770e89a5a559, type: 3}
