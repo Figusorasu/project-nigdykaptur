@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.AI;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.XR;
+using UnityEditor.PackageManager;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,34 +15,40 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Movement")]
 		[SerializeField] private float lookRotationSpeed = 8f;
-		[SerializeField] private LayerMask walkableLayer;
+		//[SerializeField] private LayerMask walkableLayer;
+		private int walkableLayerMask;
+
 		[SerializeField] private NavMeshAgent _playerAgent;
 		[SerializeField] private ParticleSystem clickEffect;
+
+		private LayerMask clickableLayers;
 		
 	[Header("Interaction System")]
 		[SerializeField] private float interactionDistance = 1f;
-		[SerializeField] private LayerMask interactableLayer;
+		private int interactableLayerMask;
 
 		private GameObject interactionTarget = null;
-
 		private IInteractable interactable = null;
 
 		private bool interactionIsPending = false;
 
-		public bool interactableObjectHover = false;
+		public int numbersOfCubes = 0;
+
+	#region Debuging Variables
 		public bool interactableObjectFound = false;
 		public bool interactableFound = false;
-
+	#endregion
 
 	private void Awake() 
 	{
 		AssignInput();
+		
+		clickableLayers = LayerMask.GetMask("Ground", "Interactable");
     }
 
 	private void Start() 
 	{
 		_playerAgent = GetComponent<NavMeshAgent>();
-		
 	}
 
 	private void Update() 
@@ -50,17 +57,18 @@ public class PlayerController : MonoBehaviour
 		
 		if(interactionTarget != null && interactable != null) 
 		{
-			if(interactionIsPending = true && Vector3.Distance(interactionTarget.transform.position, transform.position) < interactionDistance)
+			if(interactionIsPending && InteractionTargetIsInRange())
 			{	
-				interactionIsPending = false;
 				interactable.Interact();
-				
+				interactionTarget = null;
+				interactable = null;
 			}
 		}
 
+		//Debuging
 		interactableObjectFound = interactionTarget != null ? true : false;
 		interactableFound = interactable != null ? true : false;
-
+		//
 	}
 
 	#region Inputs
@@ -81,45 +89,62 @@ public class PlayerController : MonoBehaviour
 		}
 	#endregion
 
-	
 	private void OnClick() 
 	{
 		Ray ray = Camera.main.ScreenPointToRay(_playerInput.Player.MousePosition.ReadValue<Vector2>());
 		RaycastHit hitInfo;
-		if(Physics.Raycast(ray, out hitInfo, 100, walkableLayer)) 
+
+		walkableLayerMask = LayerMask.NameToLayer("Ground");
+		interactableLayerMask = LayerMask.NameToLayer("Interactable");
+
+		if(Physics.Raycast(ray, out hitInfo, 100)) 
 		{
-			_playerAgent.destination = hitInfo.point;
+			LayerMask clickedLayer = hitInfo.collider.gameObject.layer;
+			ClearInteractableObjects();
 
-			if(clickEffect != null)
+			if(clickedLayer.value == walkableLayerMask)
 			{
-				Instantiate(clickEffect, hitInfo.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
+				_playerAgent.destination = hitInfo.point;
+				if(clickEffect != null)
+				{
+					Instantiate(clickEffect, hitInfo.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
+				}
 			}
-		}
+			
+			if(clickedLayer.value == interactableLayerMask)
+			{	
+				interactionTarget = hitInfo.transform.gameObject;
+				interactable = interactionTarget.GetComponent<IInteractable>();
 
-		if(Physics.Raycast(ray, out hitInfo, 100, interactableLayer))
-		{	
-			interactionTarget = hitInfo.transform.gameObject;
-			interactable = interactionTarget.GetComponent<IInteractable>();
+				if(!InteractionTargetIsInRange())
+				{
+					_playerAgent.destination = hitInfo.point;
+				}
 
-			if(Vector3.Distance(interactionTarget.transform.position, transform.position) < interactionDistance)
-			{
-				interactable.Interact();
-			}
-			else
-			{
+				if(clickEffect != null)
+				{
+					var particlePos = interactionTarget.transform.position; //+= new Vector3(0, 0.1f, 0);
+					Instantiate(clickEffect, particlePos, clickEffect.transform.rotation);
+				}
 				interactionIsPending = true;
 			}
-			
-			
-		}
-		else
-		{	
-			interactionTarget = null;
-		}
-
+		}	
 	}
 
-	private void FaceTarget() {
+	void ClearInteractableObjects()
+	{
+		interactionIsPending = false;
+		interactionTarget = null;
+		interactable = null;
+	}
+
+	bool InteractionTargetIsInRange()
+	{
+		return Vector3.Distance(interactionTarget.transform.position, transform.position) < interactionDistance;
+	}
+
+	private void FaceTarget()
+	{
 		if(_playerAgent.velocity != Vector3.zero)
 		{
 			Vector3 direction = (_playerAgent.destination - transform.position).normalized;
@@ -127,7 +152,6 @@ public class PlayerController : MonoBehaviour
 			transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
 		}
 	}
-	
 
 	private void OnDrawGizmos()
 	{
