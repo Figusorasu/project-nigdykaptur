@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mr. Green
-  m_Shader: {fileID: -6465566751694194690, guid: 8d62bb09da1d49340a201774f722def7,
+  m_Name: Protag_mat
+  m_Shader: {fileID: -6465566751694194690, guid: b697a5e67c1c2a244871820bf391cd79,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,7 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1f527cd333e271d45b27c5a7bf47524a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -66,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1f527cd333e271d45b27c5a7bf47524a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -82,6 +82,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SmoothnessMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -115,6 +119,7 @@ Material:
     - SoftEdgeSize: 28
     - _AlphaClip: 0
     - _AlphaToMask: 0
+    - _AmbientEnvironmentMultiplier: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -126,7 +131,11 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EMISSION: 0
+    - _EdgeDiffuse: 0.032
+    - _EdgeDistanceAttenuation: 0.001
+    - _EdgeRim: 0.1
+    - _EdgeShadowAttenuation: 1
+    - _EdgeSpecular: 0.089
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -139,11 +148,13 @@ Material:
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RampLevels: 4
-    - _Ramp_Levels: 0.49
+    - _RampLevels: 3
     - _ReceiveShadows: 1
+    - _RimAmount: 0.502
+    - _RimStrength: 0.596
+    - _RimThreshold: 0.577
     - _Shades: 0.2
-    - _Smoothness: 0.5
+    - _Smoothness: 0.694
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -152,14 +163,14 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - HardEdgeColor: {r: 0, g: 0, b: 0, a: 0}
-    - SoftEdgeColor: {r: 0, g: 0, b: 0, a: 1}
+    - HardEdgeColor: {r: 0, g: 0, b: 0, a: 1}
+    - SoftEdgeColor: {r: 0.0009765625, g: 0.0009765625, b: 0.0009765625, a: 1}
+    - _AmbientColor: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.16353686, g: 0.7075472, b: 0.19980419, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissColor: {r: 1, g: 1, b: 1, a: 0}
-    - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighColor: {r: 2, g: 2, b: 2, a: 1}
-    - _LowColor: {r: 0.8408964, g: 0.8408964, b: 0.8408964, a: 1}
+    - _LowColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

@@ -13,7 +13,7 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-	private InputActions _playerInput;
+	//private InputActions _playerInput;
 
 	[Header("Movement")]
 		[SerializeField] private float lookRotationSpeed = 8f;
@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
 		
 	[Header("Interaction System")]
 		[SerializeField] private float interactionDistance = 1f;
+		[SerializeField] private Canvas promptCanvas;
+
 		private int interactableLayerMask;
 
 		private GameObject interactionTarget = null;
@@ -36,12 +38,10 @@ public class PlayerController : MonoBehaviour
 
 		private bool interactionIsPending = false;
 
-		public int numbersOfCubes = 0;
-
-	#region Debuging Variables
+	[Header("Debuging")]
 		public bool interactableObjectFound = false;
 		public bool interactableFound = false;
-	#endregion
+		public int numbersOfCubes = 0;
 
 
 	#region Unity Methods
@@ -77,18 +77,20 @@ public class PlayerController : MonoBehaviour
 	#region Inputs
 		private void AssignInput() 
 		{
-			_playerInput = new InputActions();
-			_playerInput.Player.LeftMouseClick.performed += ctx => OnClick();
+			//_playerInput = new InputActions();
+			//_playerInput.Player.LeftMouseClick.performed += ctx => OnClick();
+			
+			InputHandler.Instance.inputAction.Player.LeftMouseClick.performed += ctx => OnClick();
 		}
 
-		private void OnEnable() {_playerInput.Enable();}
-		private void OnDisable() {_playerInput.Disable();}
+		//private void OnEnable() {_playerInput.Enable();}
+		//private void OnDisable() {_playerInput.Disable();}
 	
 		private void OnClick() 
 		{
 			if(!disablePlayerRaycast) 
 			{
-				Ray ray = Camera.main.ScreenPointToRay(_playerInput.Player.MousePosition.ReadValue<Vector2>());
+				Ray ray = Camera.main.ScreenPointToRay(InputHandler.Instance.inputAction.Player.MousePosition.ReadValue<Vector2>());
 				RaycastHit hitInfo;
 
 				walkableLayerMask = LayerMask.NameToLayer("Ground");
@@ -158,6 +160,8 @@ public class PlayerController : MonoBehaviour
 			if(interactionIsPending && InteractionTargetIsInRange())
 			{	
 				interactable.Interact();
+				promptCanvas.GetComponent<Prompt>().promptText.text = "Interacted with object";
+				Instantiate(promptCanvas);
 				interactionTarget = null;
 				interactable = null;
 			}
