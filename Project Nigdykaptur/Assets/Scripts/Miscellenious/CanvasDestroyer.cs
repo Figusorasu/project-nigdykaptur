@@ -8,7 +8,6 @@ public class CanvasDestroyer : MonoBehaviour
 
     void Start()
     {
-        Destroy(this.gameObject.GetComponent<Canvas>(), lifeTime);
-        Destroy(this.gameObject, lifeTime + 1f);
+        Destroy(this.gameObject, lifeTime);
     }
 }

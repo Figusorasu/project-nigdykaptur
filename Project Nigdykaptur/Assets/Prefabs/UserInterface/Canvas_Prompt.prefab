@@ -60,7 +60,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4be55941dd7f24c9c7b4d3cbfdea39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 70
+  lifeTime: 1.2
 --- !u!1 &6564270755807246340
 GameObject:
   m_ObjectHideFlags: 0

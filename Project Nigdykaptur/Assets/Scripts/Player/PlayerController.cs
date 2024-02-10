@@ -13,11 +13,11 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-	//private InputActions _playerInput;
+	private PlayerInputActions playerInput;
 
 	[Header("Movement")]
 		[SerializeField] private float lookRotationSpeed = 8f;
-		//[SerializeField] private LayerMask walkableLayer;
+		[SerializeField] private LayerMask walkableLayer;
 		private int walkableLayerMask;
 
 		[SerializeField] private NavMeshAgent _playerAgent;
@@ -48,12 +48,7 @@ public class PlayerController : MonoBehaviour
 		private void Awake() 
 		{
 			AssignInput();
-		
 			clickableLayers = LayerMask.GetMask("Ground", "Interactable");
-		}
-
-		private void Start() 
-		{
 			_playerAgent = GetComponent<NavMeshAgent>();
 		}
 
@@ -69,7 +64,7 @@ public class PlayerController : MonoBehaviour
 			//Debuging
 			interactableObjectFound = interactionTarget != null ? true : false;
 			interactableFound = interactable != null ? true : false;
-			Debug.Log($"Disable Player Raycast{disablePlayerRaycast}");
+			Debug.Log($"Disable Player Raycast {disablePlayerRaycast}");
 			//
 		}
 	#endregion
@@ -77,20 +72,18 @@ public class PlayerController : MonoBehaviour
 	#region Inputs
 		private void AssignInput() 
 		{
-			//_playerInput = new InputActions();
-			//_playerInput.Player.LeftMouseClick.performed += ctx => OnClick();
-			
-			InputHandler.Instance.inputAction.Player.LeftMouseClick.performed += ctx => OnClick();
+			playerInput = new PlayerInputActions();
+			playerInput.Player.LeftMouseClick.performed += ctx => OnClick();
 		}
 
-		//private void OnEnable() {_playerInput.Enable();}
-		//private void OnDisable() {_playerInput.Disable();}
+		private void OnEnable() {playerInput.Enable();}
+		private void OnDisable() {playerInput.Disable();}
 	
 		private void OnClick() 
 		{
 			if(!disablePlayerRaycast) 
 			{
-				Ray ray = Camera.main.ScreenPointToRay(InputHandler.Instance.inputAction.Player.MousePosition.ReadValue<Vector2>());
+				Ray ray = Camera.main.ScreenPointToRay(playerInput.Player.MousePosition.ReadValue<Vector2>());
 				RaycastHit hitInfo;
 
 				walkableLayerMask = LayerMask.NameToLayer("Ground");

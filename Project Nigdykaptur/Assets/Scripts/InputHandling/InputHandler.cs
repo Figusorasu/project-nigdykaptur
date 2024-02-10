@@ -1,20 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    public static InputHandler Instance {get; private set;}
-	public InputActions inputAction {get; private set;}
+    public static InputHandler inputHandler;
+
+	[SerializeField] private InputActionAsset actionAsset;
+
+	public UnityEvent ClickToMoveEvent;// {get; private set; }
+
 
     private void Awake() 
 	{
-        if(Instance == null) 
+        if(inputHandler == null) 
 		{
-            Instance = this;
-            DontDestroyOnLoad(Instance);
-			inputAction = new InputActions();
+            inputHandler = this;
+			AssignInputActions();
+            DontDestroyOnLoad(inputHandler);
         } 
 		else 
 		{
@@ -23,13 +28,19 @@ public class InputHandler : MonoBehaviour
 		};
 	}
 
+	private void AssignInputActions()
+	{
+		
+	}
+
+
 	private void OnEnable() 
 	{
-		inputAction.Enable();
+		actionAsset.Enable();
 	}
 	private void OnDisable() 
 	{
-		inputAction.Disable();
+		actionAsset.Disable();
 	}
 }
 

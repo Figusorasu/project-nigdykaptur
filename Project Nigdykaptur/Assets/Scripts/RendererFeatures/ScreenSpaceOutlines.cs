@@ -58,10 +58,11 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
         private readonly List<ShaderTagId> shaderTagIdList;
         private readonly Material normalsMaterial;
         private readonly Material occludersMaterial;
+		[System.Obsolete]
+		private readonly RenderTargetHandle normals;
 
-        private readonly RenderTargetHandle normals;
-
-        public ViewSpaceNormalsTexturePass(RenderPassEvent renderPassEvent, LayerMask layerMask, LayerMask occluderLayerMask, ViewSpaceNormalsTextureSettings settings) {
+		[System.Obsolete]
+		public ViewSpaceNormalsTexturePass(RenderPassEvent renderPassEvent, LayerMask layerMask, LayerMask occluderLayerMask, ViewSpaceNormalsTextureSettings settings) {
             this.renderPassEvent = renderPassEvent;
             this.normalsTextureSettings = settings;
             filteringSettings = new FilteringSettings(RenderQueueRange.opaque, layerMask);
@@ -81,7 +82,9 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
             occludersMaterial.SetColor("_Color", normalsTextureSettings.backgroundColor);
         }
 
-        public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor) {
+		[System.Obsolete]
+#pragma warning disable CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
+		public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor) {
             RenderTextureDescriptor normalsTextureDescriptor = cameraTextureDescriptor;
             normalsTextureDescriptor.colorFormat = normalsTextureSettings.colorFormat;
             normalsTextureDescriptor.depthBufferBits = normalsTextureSettings.depthBufferBits;
@@ -90,8 +93,9 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
             ConfigureTarget(normals.Identifier());
             ConfigureClear(ClearFlag.All, normalsTextureSettings.backgroundColor);
         }
+#pragma warning restore CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
 
-        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
+		public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
             if (!normalsMaterial || !occludersMaterial)
                 return;
 
@@ -117,11 +121,14 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
             CommandBufferPool.Release(cmd);
         }
 
-        public override void OnCameraCleanup(CommandBuffer cmd) {
+		[System.Obsolete]
+#pragma warning disable CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
+		public override void OnCameraCleanup(CommandBuffer cmd) {
             cmd.ReleaseTemporaryRT(normals.id);
         }
+#pragma warning restore CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
 
-    }
+	}
 
     private class ScreenSpaceOutlinePass : ScriptableRenderPass {
 
@@ -148,7 +155,9 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
             screenSpaceOutlineMaterial.SetFloat("_SteepAngleMultiplier", settings.steepAngleMultiplier);
         }
 
-        public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData) {
+		[System.Obsolete]
+#pragma warning disable CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
+		public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData) {
             RenderTextureDescriptor temporaryTargetDescriptor = renderingData.cameraData.cameraTargetDescriptor;
             temporaryTargetDescriptor.depthBufferBits = 0;
             cmd.GetTemporaryRT(temporaryBufferID, temporaryTargetDescriptor, FilterMode.Bilinear);
@@ -156,23 +165,28 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
 
             cameraColorTarget = renderingData.cameraData.renderer.cameraColorTarget;
         }
+#pragma warning restore CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
 
-        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
+		[System.Obsolete]
+#pragma warning disable CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
+		public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
             if (!screenSpaceOutlineMaterial)
                 return;
 
             CommandBuffer cmd = CommandBufferPool.Get();
-            using (new ProfilingScope(cmd, new ProfilingSampler("ScreenSpaceOutlines"))) {
+			using (new ProfilingScope(cmd, new ProfilingSampler("ScreenSpaceOutlines")))
+			{
 
-                Blit(cmd, cameraColorTarget, temporaryBuffer);
+				Blit(cmd, cameraColorTarget, temporaryBuffer);
                 Blit(cmd, temporaryBuffer, cameraColorTarget, screenSpaceOutlineMaterial);
             }
 
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
         }
+#pragma warning restore CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
 
-        public override void OnCameraCleanup(CommandBuffer cmd) {
+		public override void OnCameraCleanup(CommandBuffer cmd) {
             cmd.ReleaseTemporaryRT(temporaryBufferID);
         }
 
@@ -187,16 +201,19 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
 
     private ViewSpaceNormalsTexturePass viewSpaceNormalsTexturePass;
     private ScreenSpaceOutlinePass screenSpaceOutlinePass;
-    
-    public override void Create() {
+
+	[System.Obsolete]
+#pragma warning disable CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
+	public override void Create() {
         if (renderPassEvent < RenderPassEvent.BeforeRenderingPrePasses)
             renderPassEvent = RenderPassEvent.BeforeRenderingPrePasses;
 
         viewSpaceNormalsTexturePass = new ViewSpaceNormalsTexturePass(renderPassEvent, outlinesLayerMask, outlinesOccluderLayerMask, viewSpaceNormalsTextureSettings);
         screenSpaceOutlinePass = new ScreenSpaceOutlinePass(renderPassEvent, outlineSettings);
     }
+#pragma warning restore CS0809 // Przestarza³a sk³adowa przes³ania nieprzestarza³¹ sk³adow¹
 
-    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
+	public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
         renderer.EnqueuePass(viewSpaceNormalsTexturePass);
         renderer.EnqueuePass(screenSpaceOutlinePass);
     }
